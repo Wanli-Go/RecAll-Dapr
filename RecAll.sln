@@ -3,9 +3,26 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34622.214
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Contrib", "Contrib", "{EA816816-1907-4F04-9E76-D2E5AEB55B7D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextItem.Api", "Contrib\TextItem.Api\TextItem.Api.csproj", "{74106F8A-7F9D-40F3-B963-A3DFE8C78BB3}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{74106F8A-7F9D-40F3-B963-A3DFE8C78BB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74106F8A-7F9D-40F3-B963-A3DFE8C78BB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74106F8A-7F9D-40F3-B963-A3DFE8C78BB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74106F8A-7F9D-40F3-B963-A3DFE8C78BB3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{74106F8A-7F9D-40F3-B963-A3DFE8C78BB3} = {EA816816-1907-4F04-9E76-D2E5AEB55B7D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1CE16723-2CC3-4090-AE3B-90D8C14F2292}
