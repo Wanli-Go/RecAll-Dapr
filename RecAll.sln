@@ -7,6 +7,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Contrib", "Contrib", "{EA81
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextItem.Api", "Contrib\TextItem.Api\TextItem.Api.csproj", "{74106F8A-7F9D-40F3-B963-A3DFE8C78BB3}"
 EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{5BA05391-567E-4B66-B80B-EF59D8AC3715}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,6 +19,10 @@ Global
 		{74106F8A-7F9D-40F3-B963-A3DFE8C78BB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{74106F8A-7F9D-40F3-B963-A3DFE8C78BB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{74106F8A-7F9D-40F3-B963-A3DFE8C78BB3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5BA05391-567E-4B66-B80B-EF59D8AC3715}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BA05391-567E-4B66-B80B-EF59D8AC3715}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BA05391-567E-4B66-B80B-EF59D8AC3715}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BA05391-567E-4B66-B80B-EF59D8AC3715}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
