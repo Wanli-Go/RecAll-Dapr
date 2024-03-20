@@ -1,32 +1,56 @@
+using Dapr.Client;
+using Dapr.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore;
+using Polly;
+using RecAll.Contrib.TextItem.Api.Services;
+
+static Policy CreateRetryPolicy()
+{
+    return Policy.Handle<Exception>().WaitAndRetryForever(
+        sleepDurationProvider: i => TimeSpan.FromSeconds(2^i),
+        onRetry: (exception, retry, _) => {
+            Console.WriteLine(
+                "Exception {0} with message {1} detected during database migration (retry attempt {2})",
+                exception.GetType().Name, exception.Message, retry);
+        });
+}
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.Configuration.AddDaprSecretStore("recall-secretstore", new DaprClientBuilder().Build());
+
+builder.Services.AddDbContext<TextItemContext>(p => p.UseSqlServer(builder.Configuration["ConnectionStrings:TextItemContext"]));
+
+builder.Services.AddControllers();
+
+Utils.AddCustomApplicationServices(builder);
+
+Utils.AddCustomSwagger(builder);
+
+
 
 var app = builder.Build();
+Console.Write(builder.Configuration["ConnectionStrings:TextItemContext"]);
 
-// Configure the HTTP request pipeline.
-
-var summaries = new[]
+if (app.Environment.IsDevelopment())
 {
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+    app.UseDeveloperExceptionPage();
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+app.MapGet("/", () => Results.LocalRedirect("~/swagger"));
+app.MapControllers();
 
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast = Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-});
+// Apply Database Migration
+using var scope = app.Services.CreateScope();
+
+var retryPolicy = CreateRetryPolicy();
+var context =
+    scope.ServiceProvider.GetRequiredService<TextItemContext>();
+
+retryPolicy.Execute(context.Database.Migrate);
+
 
 app.Run();
 
-internal record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
+

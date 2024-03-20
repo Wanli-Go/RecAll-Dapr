@@ -5,9 +5,24 @@ VisualStudioVersion = 17.9.34622.214
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Contrib", "Contrib", "{EA816816-1907-4F04-9E76-D2E5AEB55B7D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextItem.Api", "Contrib\TextItem.Api\TextItem.Api.csproj", "{74106F8A-7F9D-40F3-B963-A3DFE8C78BB3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TextItem.Api", "Contrib\TextItem.Api\TextItem.Api.csproj", "{74106F8A-7F9D-40F3-B963-A3DFE8C78BB3}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{5BA05391-567E-4B66-B80B-EF59D8AC3715}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dapr", "dapr", "{480D6566-11A2-4425-A191-BC91B47A2B05}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "components", "components", "{37F376FD-BFD9-40E6-B131-5678D528A8CF}"
+	ProjectSection(SolutionItems) = preProject
+		dapr\components\recall-secrets.json = dapr\components\recall-secrets.json
+		dapr\components\recall-secretstore.yaml = dapr\components\recall-secretstore.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "configuration", "configuration", "{A430C1EF-ACB1-4EEC-85B5-D0437058F0FD}"
+	ProjectSection(SolutionItems) = preProject
+		dapr\configuration\recall-configuration.yaml = dapr\configuration\recall-configuration.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NewFolder1", "NewFolder1", "{F6AB372A-B81A-4427-B9B3-2985270C4B88}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +44,9 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{74106F8A-7F9D-40F3-B963-A3DFE8C78BB3} = {EA816816-1907-4F04-9E76-D2E5AEB55B7D}
+		{37F376FD-BFD9-40E6-B131-5678D528A8CF} = {480D6566-11A2-4425-A191-BC91B47A2B05}
+		{A430C1EF-ACB1-4EEC-85B5-D0437058F0FD} = {480D6566-11A2-4425-A191-BC91B47A2B05}
+		{F6AB372A-B81A-4427-B9B3-2985270C4B88} = {EA816816-1907-4F04-9E76-D2E5AEB55B7D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1CE16723-2CC3-4090-AE3B-90D8C14F2292}
