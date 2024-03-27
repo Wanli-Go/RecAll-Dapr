@@ -1,5 +1,7 @@
 using Dapr.Client;
 using Dapr.Extensions.Configuration;
+using HealthChecks.UI.Client;
+using Infrastructure.Api;
 using Microsoft.EntityFrameworkCore;
 using Polly;
 using RecAll.Contrib.TextItem.Api.Services;
@@ -23,11 +25,20 @@ builder.Services.AddDbContext<TextItemContext>(p => p.UseSqlServer(builder.Confi
 
 builder.Services.AddControllers();
 
+builder.Services.AddHealthChecks();
+
+builder.Services.AddDaprClient();
+
+
+Utils.AddCustomSerilog(builder);
+
 Utils.AddCustomApplicationServices(builder);
 
 Utils.AddCustomSwagger(builder);
 
+Utils.AddInvalidModelStateResponseFactory(builder);
 
+builder.AddCustomHealthChecks();
 
 var app = builder.Build();
 Console.Write(builder.Configuration["ConnectionStrings:TextItemContext"]);
@@ -49,6 +60,9 @@ var context =
     scope.ServiceProvider.GetRequiredService<TextItemContext>();
 
 retryPolicy.Execute(context.Database.Migrate);
+
+app.MapCustomHealthChecks(
+    responseWriter: UIResponseWriter.WriteHealthCheckUIResponse);
 
 
 app.Run();

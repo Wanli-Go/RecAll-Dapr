@@ -4,6 +4,12 @@ services:
   recall-zipkin:
     ports:
       - "35411:9411"
+      
+  recall-seq:
+    environment:
+      - ACCEPT_EULA=Y
+    ports:
+      - "35340:80"
 
   recall-sqldata:
     environment:
@@ -25,7 +31,7 @@ services:
   recall-textitemapi-dapr:
     command: ["./daprd",
               "-app-id", "recall-textitemapi",
-              "-app-port", "80",
+              "-app-port", "8080",
               "-components-path", "/components",
               "-config", "/configuration/recall-configuration.yaml"
     ]
@@ -33,6 +39,14 @@ services:
       - "./dapr/components/:/components"
       - "./dapr/configuration/:/configuration"
 
+  recall-servicestatus:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+    ports:
+      - "35107:8080"
+
 volumes:
   recall-sqldata:
     external: false
+

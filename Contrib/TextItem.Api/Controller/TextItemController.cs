@@ -2,6 +2,9 @@
 using Microsoft.EntityFrameworkCore;
 using RecAll.Contrib.TextItem.Api.Commands;
 using RecAll.Contrib.TextItem.Api.Services;
+using TheSalLab.GeneralReturnValues;
+
+// TODO: complete logger and resultviewmodel
 
 namespace RecAll.Contrib.TextItem.Api.Controller;
 [ApiController]
@@ -10,10 +13,13 @@ public class TextItemController
 {
     private readonly IIdentityService _identityService;
     private readonly TextItemContext _textItemContext;
+    private readonly ILogger<TextItemController> _logger;
 
+    // Constructor Injection
     public TextItemController(IIdentityService identityService,
-        TextItemContext textItemContext)
+        TextItemContext textItemContext, ILogger<TextItemController> logger)
     {
+        _logger = logger;
         _identityService = identityService;
         _textItemContext = textItemContext;
     }
@@ -21,9 +27,12 @@ public class TextItemController
 
     [HttpPost]
     [Route("create")]
-    public async Task<ActionResult<string>> CreateAsync(
+    public async Task<ServiceResultViewModel<string>> CreateAsync(
         [FromBody] CreateTextItemCommand command)
     {
+        _logger.LogInformation(
+            "----- Handling command {CommandName} ({@Command})",
+            command.GetType().Name, command);
         var textItem = new Models.TextItem
         {
             Content = command.Content,
@@ -32,7 +41,12 @@ public class TextItemController
         };
         var textItemEntity = _textItemContext.Add(textItem);
         await _textItemContext.SaveChangesAsync();
-        return textItemEntity.Entity.Id.ToString();
+
+        _logger.LogInformation("----- Command {CommandName} handled",
+            command.GetType().Name);
+
+        return ServiceResult<string>.CreateSucceededResult(textItemEntity.Entity.Id.ToString())
+            .ToServiceResultViewModel();
     }
 
     [HttpGet]
@@ -47,6 +61,9 @@ public class TextItemController
 
         if (textItem is null)
         {
+            _logger.LogWarning(
+                $"用户{userIdentityGuid}尝试查看已删除、不存在或不属于自己的TextItem {id}");
+
             return new BadRequestResult();
         }
         else
@@ -75,9 +92,11 @@ public class TextItemController
                 itemIds.Except(textItems.Select(p => p.ItemId.Value))
                     .Select(p => p.ToString()));
 
+            _logger.LogWarning(
+                $"用户{userIdentityGuid}尝试查看已删除、不存在或不属于自己的TextItem {missingIds}");
+
             return new BadRequestResult();
         }
-
         textItems.Sort((x, y) =>
             itemIds.IndexOf(x.ItemId.Value) - itemIds.IndexOf(y.ItemId.Value));
 
@@ -95,6 +114,12 @@ public class TextItemController
             p.ItemId == itemId && p.UserIdentityGuid == userIdentityGuid &&
             !p.IsDeleted);
 
+        if (textItem is null)
+        {
+            _logger.LogWarning(
+                $"用户{userIdentityGuid}尝试查看已删除、不存在或不属于自己的TextItem {itemId}");
+        }
+
         return textItem is null
             ? new BadRequestResult()
             : textItem;
@@ -103,9 +128,13 @@ public class TextItemController
 
     [Route("update")]
     [HttpPost]
-    public async Task<ActionResult> UpdateAsync(
+    public async Task<ServiceResultViewModel> UpdateAsync(
         [FromBody] UpdateTextItemCommand command)
     {
+        _logger.LogInformation(
+            "----- Handling command {CommandName} ({@Command})",
+            command.GetType().Name, command);
+
         var userIdentityGuid = _identityService.GetUserIdentityGuid();
 
         var textItem = await _textItemContext.TextItems.FirstOrDefaultAsync(p =>
@@ -114,13 +143,21 @@ public class TextItemController
 
         if (textItem is null)
         {
-            return new BadRequestResult();
+            _logger.LogWarning(
+                $"用户{userIdentityGuid}尝试查看已删除、不存在或不属于自己的TextItem {command.Id}");
+
+            return ServiceResult
+                .CreateFailedResult($"Unknown TextItem id: {command.Id}")
+                .ToServiceResultViewModel();
         }
 
         textItem.Content = command.Content;
         await _textItemContext.SaveChangesAsync();
 
-        return new OkResult();
+        _logger.LogInformation("----- Command {CommandName} handled",
+            command.GetType().Name);
+
+        return ServiceResult.CreateSucceededResult().ToServiceResultViewModel();
     }
 }
 
