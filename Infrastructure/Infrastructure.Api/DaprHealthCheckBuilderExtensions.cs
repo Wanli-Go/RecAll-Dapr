@@ -1,4 +1,4 @@
-﻿namespace Infrastructure.Api
+﻿namespace RecAll.Infrastructure.Infrastructure.Api
 {
     public static class DaprHealthCheckBuilderExtensions
     {

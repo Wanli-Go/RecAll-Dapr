@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace List.Domain.Events;
+namespace RecAll.Core.List.Domain.Events;
 
 public class ListDeletedDomainEvent : INotification
 {

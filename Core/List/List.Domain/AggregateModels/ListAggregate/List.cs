@@ -1,8 +1,9 @@
 ﻿using Ddd.Domain.SeedWork;
-using List.Domain.Events;
-using List.Domain.Exceptions;
+using List.Domain.AggregateModels;
+using RecAll.Core.List.Domain.Events;
+using RecAll.Core.List.Domain.Exceptions;
 
-namespace List.Domain.AggregateModels.ListAggregate;
+namespace RecAll.Core.List.Domain.AggregateModels.ListAggregate;
 
 public class List : Entity, IAggregateRoot // Write Only
 {

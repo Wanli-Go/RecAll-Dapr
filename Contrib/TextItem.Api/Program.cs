@@ -1,10 +1,10 @@
 using Dapr.Client;
 using Dapr.Extensions.Configuration;
 using HealthChecks.UI.Client;
-using Infrastructure.Api;
 using Microsoft.EntityFrameworkCore;
 using Polly;
 using RecAll.Contrib.TextItem.Api.Services;
+using RecAll.Infrastructure.Infrastructure.Api;
 
 static Policy CreateRetryPolicy()
 {

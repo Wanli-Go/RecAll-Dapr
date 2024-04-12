@@ -1,5 +1,5 @@
 ﻿using Ddd.Domain.SeedWork;
-using List.Domain.Exceptions;
+using RecAll.Core.List.Domain.Exceptions;
 
 namespace List.Domain.AggregateModels;
 

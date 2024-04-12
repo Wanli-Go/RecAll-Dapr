@@ -1,6 +1,6 @@
 ﻿using Ddd.Domain.Exceptions;
 
-namespace List.Domain.Exceptions;
+namespace RecAll.Core.List.Domain.Exceptions;
 
 public class ListDomainException : DomainException
 {

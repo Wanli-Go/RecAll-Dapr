@@ -1,7 +1,7 @@
 ﻿using Dapr.Client;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
-namespace Infrastructure.Api;
+namespace RecAll.Infrastructure.Infrastructure.Api;
 public class DaprHealthCheck : IHealthCheck
 {
     private readonly DaprClient _daprClient;

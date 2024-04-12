@@ -1,6 +1,7 @@
 ﻿using Infrastructure.Api;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using RecAll.Infrastructure.Infrastructure.Api;
 using Serilog;
 using TheSalLab.GeneralReturnValues;
 

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
-namespace Infrastructure.Api
+namespace RecAll.Infrastructure.Infrastructure.Api
 {
     public static class HealthCheckEndpointRouteBuilderExtensions
     {

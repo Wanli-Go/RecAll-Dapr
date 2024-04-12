@@ -1,6 +1,5 @@
 ﻿using Ddd.Domain.SeedWork;
-
-namespace List.Domain.AggregateModels.ListAggregate;
+namespace RecAll.Core.List.Domain.AggregateModels.ListAggregate;
 
 public interface IListRepository : IRepository<List>
 {
